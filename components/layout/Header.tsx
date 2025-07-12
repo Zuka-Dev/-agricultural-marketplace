@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { getCurrentUser } from "@/lib/auth";
 import { ShoppingCart, User, Settings, Wheat } from "lucide-react";
 import LogoutButton from "@/components/auth/LogoutButton";
+import { getCurrentUser } from "@/lib/auth";
 
 export default async function Header() {
   const user = await getCurrentUser();
@@ -30,12 +30,12 @@ export default async function Header() {
               Home
             </Link>
             <Link
-              href="/product"
+              href="/#products"
               className="text-soil-700 hover:text-forest-600 font-medium transition-colors"
             >
               Products
             </Link>
-            {user?.role === "customer" && (
+            {user && (
               <Link
                 href="/cart"
                 className="flex items-center space-x-1 text-soil-700 hover:text-forest-600 font-medium transition-colors"
@@ -45,13 +45,22 @@ export default async function Header() {
               </Link>
             )}
             {user?.role === "admin" && (
-              <Link
-                href="/admin"
-                className="flex items-center space-x-1 text-soil-700 hover:text-forest-600 font-medium transition-colors"
-              >
-                <Settings className="h-4 w-4" />
-                <span>Admin</span>
-              </Link>
+              <>
+                <Link
+                  href="/admin"
+                  className="flex items-center space-x-1 text-soil-700 hover:text-forest-600 font-medium transition-colors"
+                >
+                  <Settings className="h-4 w-4" />
+                  <span>Admin</span>
+                </Link>
+                <Link
+                  href="/admin/orders"
+                  className="flex items-center space-x-1 text-soil-700 hover:text-forest-600 font-medium transition-colors"
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  <span>Orders</span>
+                </Link>
+              </>
             )}
           </nav>
 
