@@ -10,7 +10,7 @@ const pool = new Pool({
 
 async function run() {
   const schema = fs.readFileSync(
-    path.join(__dirname, "schema.sql"),
+    path.join(__dirname, "update_orders_table.sql"),
     "utf-8"
   );
   try {

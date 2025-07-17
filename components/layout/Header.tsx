@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShoppingCart, User, Settings, Wheat } from "lucide-react";
+import { ShoppingCart, User, Settings, Wheat, Package } from "lucide-react";
 import LogoutButton from "@/components/auth/LogoutButton";
 import { getCurrentUser } from "@/lib/auth";
 
@@ -42,6 +42,15 @@ export default async function Header() {
               >
                 <ShoppingCart className="h-4 w-4" />
                 <span>Cart</span>
+              </Link>
+            )}
+            {user && user.role === "customer" && (
+              <Link
+                href="/orders"
+                className="flex items-center space-x-1 text-soil-700 hover:text-forest-600 font-medium transition-colors"
+              >
+                <Package className="h-4 w-4" />
+                <span>Orders</span>
               </Link>
             )}
             {user?.role === "admin" && (

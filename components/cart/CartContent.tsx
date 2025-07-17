@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
-import { toast } from "sonner";
-import { useToast } from "../ui/use-toast";
 
 interface CartItem {
   id: number;
@@ -19,7 +17,6 @@ interface CartItem {
 }
 
 export default function CartContent() {
-  const { toast } = useToast();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<number | null>(null);
@@ -87,35 +84,8 @@ export default function CartContent() {
     }
   };
 
-  const handleCheckout = async () => {
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Success",
-          description: "Your order has been placed successfully.",
-          variant: "default",
-        });
-        router.push("/");
-        router.refresh();
-      } else {
-        const data = await response.json();
-        toast({
-          title: "Checkout Failed",
-          description: data.error || "Please try again later.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Checkout Error",
-        description: "An error occurred while processing your order.",
-        variant: "destructive",
-      });
-    }
+  const handleCheckout = () => {
+    router.push("/checkout");
   };
 
   const totalAmount = cartItems.reduce(
@@ -141,7 +111,7 @@ export default function CartContent() {
         <p className="text-soil-500 mb-6">
           Add some fresh produce to get started!
         </p>
-        <button onClick={() => router.push("/product")} className="btn-primary">
+        <button onClick={() => router.push("/")} className="btn-primary">
           Continue Shopping
         </button>
       </div>
