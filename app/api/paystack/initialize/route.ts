@@ -22,18 +22,14 @@ export async function POST(request: NextRequest) {
         user_id: user.id,
       },
     };
-
-    const response = await fetch(
-      `${BACKEND_BASE_URL}/api/paystack/initialize`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    );
-
+    console.log("Payload for Paystack initialization:", payload);
+    const response = await fetch(`${BACKEND_BASE_URL}/initialize`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
     const data = await response.json();
 
     return NextResponse.json(data, { status: response.status });
